@@ -23,7 +23,12 @@ public class TryFeatureStreams {
 		
 		trySorted();
 		
-		tryCollectList();
+		tryCollect();
+		
+		tryMin();
+		
+		tryMax();
+		
 	}
 	
 	private static void tryBasic() {
@@ -74,7 +79,7 @@ public class TryFeatureStreams {
 		System.out.println();
 	}
 	
-	private static void tryCollectList() {
+	private static void tryCollect() {
 		
 		List<String> list = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
 			.collect(Collectors.toList());
@@ -89,5 +94,23 @@ public class TryFeatureStreams {
 		System.out.println(map);
 	}
 	
+	
+	private static void tryMin() {
+		
+		int min = Arrays.asList("3", "45", "223", "54", "22", "33").stream()
+			.mapToInt(Integer::parseInt)
+			.min()
+			.orElseThrow();
+		System.out.println("Min:" + min);
+	}
+
+	private static void tryMax() {
+		
+		int max = Arrays.asList("3", "45", "223", "54", "22", "33").stream()
+			.mapToInt(Integer::parseInt)
+			.max()
+			.orElseThrow();
+		System.out.println("Max:" + max);
+	}
 
 }
