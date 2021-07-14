@@ -1,6 +1,11 @@
 package demo;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class TryFeatureStreams {
 
@@ -13,6 +18,12 @@ public class TryFeatureStreams {
 		tryMap();
 		
 		tryPeak();
+		
+		tryDistinct();
+		
+		trySorted();
+		
+		tryCollectList();
 	}
 	
 	private static void tryBasic() {
@@ -46,5 +57,37 @@ public class TryFeatureStreams {
 			.forEach(System.out::print);
 		System.out.println();
 	}
+	
+	private static void tryDistinct() {
+		
+		Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
+			.distinct()
+			.forEach(System.out::print);
+		System.out.println();
+	}
+	
+	private static void trySorted() {
+		
+		Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
+			.sorted()
+			.forEach(System.out::print);
+		System.out.println();
+	}
+	
+	private static void tryCollectList() {
+		
+		List<String> list = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
+			.collect(Collectors.toList());
+		System.out.println(list);
+		
+		Set<String> set = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
+				.collect(Collectors.toSet());
+		System.out.println(set);
+		
+		Map<String, Integer> map = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
+				.collect(Collectors.toMap(Function.identity(), e -> e.length(), (val1, val2) -> val1 + val2));
+		System.out.println(map);
+	}
+	
 
 }
