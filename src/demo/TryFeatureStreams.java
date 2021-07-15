@@ -22,14 +22,12 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryCollect);
 		list.add(TryFeatureStreams::tryMin);		
 		list.add(TryFeatureStreams::tryMax);
-		list.add(TryFeatureStreams::tryFindFirst);				
+		list.add(TryFeatureStreams::tryFindFirst);		
+		list.add(TryFeatureStreams::tryFindAny);	
+		list.add(TryFeatureStreams::tryCount);			
 		for (var r : list) {
 			r.run();
 		}
-
-		// FindAny
-		
-
 		
 	}
 	
@@ -122,5 +120,17 @@ public class TryFeatureStreams {
 		System.out.println("First : " + first);
 	}
 	
+	private static void tryFindAny() {
+		
+		String any = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
+			.findAny().orElse(null);
+		System.out.println("Any : " + any);
+	}
+	
+	private static void tryCount() {
+		
+		long count = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream().count();
+		System.out.println("Count : " + count);
+	}
 
 }
