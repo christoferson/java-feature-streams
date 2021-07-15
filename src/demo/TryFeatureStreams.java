@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.IntPredicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import demo.model.Point;
@@ -30,11 +32,12 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryFindAny);	
 		list.add(TryFeatureStreams::tryCount);	
 		list.add(TryFeatureStreams::tryStreamOf);	
+		list.add(TryFeatureStreams::tryIntStream);	
+		list.add(TryFeatureStreams::tryIntStreamFilter);			
 		
 		for (var r : list) {
 			r.run();
 		}
-		
 	}
 	
 	private static void tryBasic() {
@@ -149,6 +152,25 @@ public class TryFeatureStreams {
 
 		System.out.println("X Values : " + xValueStream.collect(Collectors.toList()));
 		System.out.println("Y Values : " + yValueStream.collect(Collectors.toList()));
+	}
+	
+	private static void tryIntStream() {
+
+		Supplier<IntStream> supplier = () -> IntStream.of(48, 23, 22, 2, 99, 11);
+		
+		System.out.println("Sum : " + supplier.get().sum());
+		System.out.println("Min : " + supplier.get().min().getAsInt());
+		System.out.println("Max : " + supplier.get().max().getAsInt());
+		System.out.println("Avg : " + supplier.get().average().getAsDouble());
+	}
+	
+	private static void tryIntStreamFilter() {
+
+		Supplier<IntStream> supplier = () -> IntStream.of(48, 23, 22, 2, 99, 11);
+		
+		IntPredicate ipredicate = (x) -> { return x < 32; };  
+
+		System.out.println("Filtered : " + supplier.get().filter(ipredicate).boxed().collect(Collectors.toList()));
 	}
 
 }
