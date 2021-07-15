@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import demo.model.Point;
 
 public class TryFeatureStreams {
 
@@ -24,7 +28,9 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryMax);
 		list.add(TryFeatureStreams::tryFindFirst);		
 		list.add(TryFeatureStreams::tryFindAny);	
-		list.add(TryFeatureStreams::tryCount);			
+		list.add(TryFeatureStreams::tryCount);	
+		list.add(TryFeatureStreams::tryStreamOf);	
+		
 		for (var r : list) {
 			r.run();
 		}
@@ -131,6 +137,18 @@ public class TryFeatureStreams {
 		
 		long count = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream().count();
 		System.out.println("Count : " + count);
+	}
+	
+	
+	private static void tryStreamOf() {
+		
+		Supplier<Stream<Point>> supplier = () -> Stream.of(new Point(24, 76), new Point(57, -81), new Point(28, 11));
+
+		Stream<Integer> xValueStream = supplier.get().map(Point::x);
+		Stream<Integer> yValueStream = supplier.get().map(Point::y);
+
+		System.out.println("X Values : " + xValueStream.collect(Collectors.toList()));
+		System.out.println("Y Values : " + yValueStream.collect(Collectors.toList()));
 	}
 
 }
