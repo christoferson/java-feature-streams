@@ -1,5 +1,6 @@
 package demo;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -11,23 +12,24 @@ public class TryFeatureStreams {
 
 	public static void main(String[] args) {
 
-		tryBasic();
+		List<Runnable> list = new ArrayList<Runnable>();
+		list.add(TryFeatureStreams::tryBasic);
+		list.add(TryFeatureStreams::tryFilter);
+		list.add(TryFeatureStreams::tryMap);
+		list.add(TryFeatureStreams::tryPeak);
+		list.add(TryFeatureStreams::tryDistinct);
+		list.add(TryFeatureStreams::trySorted);
+		list.add(TryFeatureStreams::tryCollect);
+		list.add(TryFeatureStreams::tryMin);		
+		list.add(TryFeatureStreams::tryMax);
+		list.add(TryFeatureStreams::tryFindFirst);				
+		for (var r : list) {
+			r.run();
+		}
+
+		// FindAny
 		
-		tryFilter();
-		
-		tryMap();
-		
-		tryPeak();
-		
-		tryDistinct();
-		
-		trySorted();
-		
-		tryCollect();
-		
-		tryMin();
-		
-		tryMax();
+
 		
 	}
 	
@@ -112,5 +114,13 @@ public class TryFeatureStreams {
 			.orElseThrow();
 		System.out.println("Max:" + max);
 	}
+	
+	private static void tryFindFirst() {
+		
+		String first = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
+			.findFirst().orElse(null);
+		System.out.println("First : " + first);
+	}
+	
 
 }
