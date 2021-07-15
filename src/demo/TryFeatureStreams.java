@@ -33,7 +33,9 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryCount);	
 		list.add(TryFeatureStreams::tryStreamOf);	
 		list.add(TryFeatureStreams::tryIntStream);	
-		list.add(TryFeatureStreams::tryIntStreamFilter);			
+		list.add(TryFeatureStreams::tryIntStreamFilter);	
+		list.add(TryFeatureStreams::tryFlatMap);	
+		list.add(TryFeatureStreams::tryAnyMatch);	
 		
 		for (var r : list) {
 			r.run();
@@ -173,4 +175,22 @@ public class TryFeatureStreams {
 		System.out.println("Filtered : " + supplier.get().filter(ipredicate).boxed().collect(Collectors.toList()));
 	}
 
+	private static void tryFlatMap() {
+		System.out.println("Try Flat Map");
+		List<String> list1 = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid");
+		List<String> list2 = Arrays.asList("Dagger", "Staff", "Javelin", "Broadsword", "Rifle");
+		Stream<List<String>> combined = Stream.of(list1, list2);
+		combined.flatMap(names -> names.stream()).forEach(e -> System.out.print(String.format("%s, ", e)));
+		System.out.println("");
+	}
+	
+	private static void tryAnyMatch() {
+		System.out.println("Try Flat Map");
+		List<String> list = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid");
+		boolean match = list.stream().anyMatch(e -> e.startsWith("P"));
+		System.out.println("Match : " + match);
+		match = list.stream().anyMatch(e -> e.startsWith("E"));
+		System.out.println("Match : " + match);
+	}
+	
 }
