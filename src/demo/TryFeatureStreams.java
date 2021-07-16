@@ -36,7 +36,7 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryIntStreamFilter);	
 		list.add(TryFeatureStreams::tryFlatMap);	
 		list.add(TryFeatureStreams::tryAnyMatch);	
-		
+		list.add(TryFeatureStreams::tryAllMatch);	
 		for (var r : list) {
 			r.run();
 		}
@@ -185,12 +185,19 @@ public class TryFeatureStreams {
 	}
 	
 	private static void tryAnyMatch() {
-		System.out.println("Try Flat Map");
+		System.out.println("Try Any Match");
 		List<String> list = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid");
 		boolean match = list.stream().anyMatch(e -> e.startsWith("P"));
-		System.out.println("Match : " + match);
+		System.out.println("Match(Starts with P) : " + match);
 		match = list.stream().anyMatch(e -> e.startsWith("E"));
-		System.out.println("Match : " + match);
+		System.out.println("Match(Starts with E) : " + match);
+	}
+	
+	private static void tryAllMatch() {
+		System.out.println("Try All Match");
+		List<String> list = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid");
+		boolean match = list.stream().allMatch(e -> Character.isUpperCase(e.charAt(0)));
+		System.out.println("All Match : " + match);
 	}
 	
 }
