@@ -2,6 +2,7 @@ package demo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -42,8 +43,8 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryNoneMatch);
 		list.add(TryFeatureStreams::tryOptionalInit);
 		list.add(TryFeatureStreams::tryOptional);
-		//
 		list.add(TryFeatureStreams::tryOptionalStream);
+		list.add(TryFeatureStreams::tryIntStreamSort);
 		for (var r : list) {
 			r.run();
 		}
@@ -91,9 +92,27 @@ public class TryFeatureStreams {
 	
 	private static void trySorted() {
 		
-		Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
-			.sorted()
-			.forEach(System.out::print);
+		System.out.println("TrySorted");
+		
+		{
+			Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
+				.sorted()
+				.forEach(System.out::print);
+			System.out.println();
+		}
+		
+		{
+			Supplier<Stream<Point>> supplier = () -> Stream.of(new Point(24, 76), new Point(57, -81), new Point(28, 11));
+			supplier.get().sorted(Comparator.comparing(Point::x)).forEach(System.out::print);
+			System.out.println();
+		}
+		
+		{
+			Supplier<Stream<Point>> supplier = () -> Stream.of(new Point(24, 76), new Point(57, -81), new Point(28, 11));
+			supplier.get().sorted((p1, p2) -> p1.y() - p2.y()).forEach(System.out::print);
+			System.out.println();
+		}
+		
 		System.out.println();
 	}
 	
@@ -171,6 +190,15 @@ public class TryFeatureStreams {
 		System.out.println("Min : " + supplier.get().min().getAsInt());
 		System.out.println("Max : " + supplier.get().max().getAsInt());
 		System.out.println("Avg : " + supplier.get().average().getAsDouble());
+		System.out.println("Statistics : " + supplier.get().summaryStatistics());
+		
+	}
+	
+	private static void tryIntStreamSort() {
+		System.out.println("TryIntStreamSort");
+		Supplier<IntStream> supplier = () -> IntStream.of(48, 23, 22, 2, 99, 11, 57);
+		supplier.get().sorted().forEach(i -> System.out.print(String.format("%s, ", i)));
+		
 	}
 	
 	private static void tryIntStreamFilter() {
