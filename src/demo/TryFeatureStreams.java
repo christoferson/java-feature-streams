@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import demo.model.Name;
 import demo.model.Point;
 
 public class TryFeatureStreams {
@@ -109,9 +110,15 @@ public class TryFeatureStreams {
 		
 		{
 			Supplier<Stream<Point>> supplier = () -> Stream.of(new Point(24, 76), new Point(57, -81), new Point(28, 11));
-			supplier.get().sorted((p1, p2) -> p1.y() - p2.y()).forEach(System.out::print);
+			supplier.get().sorted((p1, p2) -> Integer.compare(p1.y(), p2.y())).forEach(System.out::print);
 			System.out.println();
 		}
+		{
+			Supplier<Stream<Name>> supplier = () -> Stream.of(new Name("Noreen", "Tamra"), new Name("Gladwyn", "Rodge"), new Name("Theodora", "Drake"), new Name("Buster", "Wil"));
+			supplier.get().sorted().forEach(System.out::print);
+			System.out.println();
+		}
+		//
 		
 		System.out.println();
 	}
