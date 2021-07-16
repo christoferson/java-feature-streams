@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntPredicate;
 import java.util.function.Supplier;
@@ -38,6 +40,10 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryAnyMatch);	
 		list.add(TryFeatureStreams::tryAllMatch);
 		list.add(TryFeatureStreams::tryNoneMatch);
+		list.add(TryFeatureStreams::tryOptionalInit);
+		list.add(TryFeatureStreams::tryOptional);
+		//
+		list.add(TryFeatureStreams::tryOptionalStream);
 		for (var r : list) {
 			r.run();
 		}
@@ -210,4 +216,59 @@ public class TryFeatureStreams {
 		System.out.println("None Match(Starts with LowerCase) : " + match);
 	}
 
+	
+	private static void tryOptionalInit() {
+		{
+			Optional<String> optional = Optional.empty();
+			System.out.println("Optional : " + optional);
+		}
+		{
+			Optional<String> optional = Optional.of("example");
+			System.out.println("Optional : " + optional);
+		}
+		{
+			Optional<String> optional = Optional.ofNullable(null);
+			System.out.println("Optional : " + optional);
+		}
+	}
+
+	private static void tryOptional() {
+		
+		Optional<String> optional = Optional.of("example");
+		System.out.println("Optional.isEmpty : " + optional.isEmpty());
+		System.out.println("Optional : " + optional.isPresent());
+		System.out.println("Optional : " + optional.get());
+		System.out.println("Optional : " + optional.orElse(null));
+		System.out.println("Optional : " + optional.orElseGet(() -> "supplied"));
+		Consumer<String> c = (e) -> System.out.println("Present->" + e);
+		optional.ifPresent(c);
+	}
+	
+	private static void tryOptionalStream() {
+		
+		Optional<String> optional = Optional.of("example");
+		optional.stream().forEach(System.out::println);
+		
+		{
+			Stream<Optional<String>> stream = Stream.of(Optional.of("1"), Optional.empty(), 
+				    Optional.of("2"), Optional.empty(), Optional.of("3"));
+			
+			List<String> list = stream
+				    .flatMap(o -> o.isPresent() ? Stream.of(o.get()) : Stream.empty())
+				    .collect(Collectors.toList());
+			System.out.println(list);
+		}
+		
+		{
+			Stream<Optional<String>> stream = Stream.of(Optional.of("1"), Optional.empty(), 
+				    Optional.of("2"), Optional.empty(), Optional.of("3"));
+			
+			List<String> list = stream 
+				    .flatMap(Optional::stream)
+				    .collect(Collectors.toList());
+
+			System.out.println(list);
+		}
+
+	}
 }
