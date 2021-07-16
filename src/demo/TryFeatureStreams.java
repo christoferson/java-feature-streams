@@ -36,7 +36,8 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryIntStreamFilter);	
 		list.add(TryFeatureStreams::tryFlatMap);	
 		list.add(TryFeatureStreams::tryAnyMatch);	
-		list.add(TryFeatureStreams::tryAllMatch);	
+		list.add(TryFeatureStreams::tryAllMatch);
+		list.add(TryFeatureStreams::tryNoneMatch);
 		for (var r : list) {
 			r.run();
 		}
@@ -199,5 +200,14 @@ public class TryFeatureStreams {
 		boolean match = list.stream().allMatch(e -> Character.isUpperCase(e.charAt(0)));
 		System.out.println("All Match : " + match);
 	}
-	
+
+	private static void tryNoneMatch() {
+		System.out.println("Try None Match");
+		List<String> list = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid");
+		boolean match = list.stream().noneMatch(e -> Character.isUpperCase(e.charAt(0)));
+		System.out.println("None Match(Starts with UpperCase) : " + match);
+		match = list.stream().noneMatch(e -> Character.isLowerCase(e.charAt(0)));
+		System.out.println("None Match(Starts with LowerCase) : " + match);
+	}
+
 }
