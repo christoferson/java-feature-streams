@@ -2,6 +2,7 @@ package demo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryPeak);
 		list.add(TryFeatureStreams::tryDistinct);
 		list.add(TryFeatureStreams::trySorted);
+		list.add(TryFeatureStreams::trySortedList);
 		list.add(TryFeatureStreams::tryCollect);
 		list.add(TryFeatureStreams::tryMin);		
 		list.add(TryFeatureStreams::tryMax);
@@ -118,7 +120,42 @@ public class TryFeatureStreams {
 			supplier.get().sorted().forEach(System.out::print);
 			System.out.println();
 		}
-		//
+		
+		System.out.println();
+	}
+	
+	private static void trySortedList() {
+		
+		System.out.println("TrySortedList");
+		
+		{
+			List<String> list = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior");
+			Collections.sort(list);
+			System.out.println(list);
+		}
+		
+		{
+			List<Point> list = Arrays.asList(new Point(24, 76), new Point(57, -81), new Point(28, 11));
+			Collections.sort(list, Comparator.comparing(Point::x));
+			System.out.println(list);
+		}
+		{
+			List<Point> list = Arrays.asList(new Point(24, 76), new Point(57, -81), new Point(28, 11));
+			list.sort(Comparator.comparing(Point::x));
+			System.out.println(list);
+		}
+		
+		{
+			List<Point> list = Arrays.asList(new Point(24, 76), new Point(57, -81), new Point(28, 11));
+			Collections.sort(list, (p1, p2) -> Integer.compare(p1.y(), p2.y()));
+			System.out.println(list);
+		}
+		{
+			List<Name> list = Arrays.asList(new Name("Noreen", "Tamra"), new Name("Gladwyn", "Rodge"), new Name("Theodora", "Drake"), new Name("Buster", "Wil"));
+			Collections.sort(list);
+			System.out.println(list);
+		}
+
 		
 		System.out.println();
 	}
