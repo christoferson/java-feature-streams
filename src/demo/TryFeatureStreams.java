@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntPredicate;
@@ -27,7 +28,7 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryBasic);
 		list.add(TryFeatureStreams::tryFilter);
 		list.add(TryFeatureStreams::tryMap);
-		list.add(TryFeatureStreams::tryPeak);
+		list.add(TryFeatureStreams::tryPeek);
 		list.add(TryFeatureStreams::tryDistinct);
 		list.add(TryFeatureStreams::trySorted);
 		list.add(TryFeatureStreams::trySortedList);
@@ -77,7 +78,7 @@ public class TryFeatureStreams {
 		System.out.println();
 	}
 	
-	private static void tryPeak() {
+	private static void tryPeek() {
 		
 		Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid").stream()
 			.peek(System.out::print)
@@ -87,6 +88,8 @@ public class TryFeatureStreams {
 	
 	private static void tryDistinct() {
 		
+		System.out.println("******* TryDistinct *******");
+		
 		Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
 			.distinct()
 			.forEach(System.out::print);
@@ -95,7 +98,7 @@ public class TryFeatureStreams {
 	
 	private static void trySorted() {
 		
-		System.out.println("TrySorted");
+		System.out.println("******* TrySorted *******");
 		
 		{
 			Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
@@ -126,7 +129,7 @@ public class TryFeatureStreams {
 	
 	private static void trySortedList() {
 		
-		System.out.println("TrySortedList");
+		System.out.println("******* TrySortedList *******");
 		
 		{
 			List<String> list = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior");
@@ -161,6 +164,7 @@ public class TryFeatureStreams {
 	}
 	
 	private static void tryCollect() {
+		System.out.println("******* TryCollect ******* ");
 		
 		List<String> list = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
 			.collect(Collectors.toList());
@@ -173,6 +177,16 @@ public class TryFeatureStreams {
 		Map<String, Integer> map = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
 				.collect(Collectors.toMap(Function.identity(), e -> e.length(), (val1, val2) -> val1 + val2));
 		System.out.println(map);
+		
+		TreeSet<String> treeset = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid", "Warrior").stream()
+				.collect(Collectors.toCollection(TreeSet::new));
+		System.out.println(treeset);
+		
+		double average = Arrays.asList(new Point(24, 76), new Point(58, -81), new Point(32, 11)).stream()
+				.collect(Collectors.averagingDouble(p -> p.x()));
+		System.out.println("Avg: " + average);
+		
+		System.out.println();
 	}
 	
 	
@@ -343,4 +357,12 @@ public class TryFeatureStreams {
 		}
 
 	}
+	
+//	private static void tryCollect() {
+//		System.out.println("Try Collect");
+//		List<String> list = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid");
+//		boolean match = list.stream().allMatch(e -> Character.isUpperCase(e.charAt(0)));
+//		System.out.println("All Match : " + match);
+//	}
+	
 }
