@@ -51,7 +51,9 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryIntStreamSort);
 		list.add(TryFeatureStreams::tryCollectGroupBy);
 		list.add(TryFeatureStreams::tryCollectGroupByAndCounting);
+		list.add(TryFeatureStreams::tryCollectJoining);
 		list.add(TryFeatureStreams::tryStreamOnClose);
+		
 		
 		for (var r : list) {
 			r.run();
@@ -387,6 +389,16 @@ public class TryFeatureStreams {
 			Map<Integer, Long> classification = list.stream().collect(Collectors.groupingBy(Point::x, Collectors.counting()));
 			System.out.println(classification);
 			System.out.println("Point with X=24 has " + classification.get(24) + " instances.");
+		}
+		System.out.println();
+	}
+	
+	private static void tryCollectJoining() {
+		System.out.println("******* TryCollectJoining *******");
+		{
+			List<Point> list = Arrays.asList(new Point(24, 76), new Point(57, -81), new Point(24, 11), new Point(57, 3), new Point(85, 78));
+			String serial = list.stream().map(point -> String.valueOf(point.x())).collect(Collectors.joining("-"));
+			System.out.println(serial);
 		}
 		System.out.println();
 	}
