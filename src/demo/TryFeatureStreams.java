@@ -52,6 +52,7 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryCollectGroupBy);
 		list.add(TryFeatureStreams::tryCollectGroupByAndCounting);
 		list.add(TryFeatureStreams::tryCollectJoining);
+		list.add(TryFeatureStreams::tryCollectPartitionBy);
 		list.add(TryFeatureStreams::tryStreamOnClose);
 		
 		
@@ -399,6 +400,16 @@ public class TryFeatureStreams {
 			List<Point> list = Arrays.asList(new Point(24, 76), new Point(57, -81), new Point(24, 11), new Point(57, 3), new Point(85, 78));
 			String serial = list.stream().map(point -> String.valueOf(point.x())).collect(Collectors.joining("-"));
 			System.out.println(serial);
+		}
+		System.out.println();
+	}
+	
+	private static void tryCollectPartitionBy() {
+		System.out.println("******* TryCollectPartitionBy *******");
+		{
+			List<Point> list = Arrays.asList(new Point(24, 76), new Point(57, -81), new Point(24, 11), new Point(57, 3), new Point(85, 78));
+			Map<Boolean, List<Point>> result = list.stream().collect(Collectors.partitioningBy(point -> point.x() < 58));
+			System.out.println(result);
 		}
 		System.out.println();
 	}
