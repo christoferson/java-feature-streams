@@ -49,6 +49,10 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryOptional);
 		list.add(TryFeatureStreams::tryOptionalStream);
 		list.add(TryFeatureStreams::tryIntStreamSort);
+		list.add(TryFeatureStreams::tryCollectGroupBy);
+		list.add(TryFeatureStreams::tryCollectGroupByAndCounting);
+		list.add(TryFeatureStreams::tryStreamOnClose);
+		
 		for (var r : list) {
 			r.run();
 		}
@@ -355,14 +359,50 @@ public class TryFeatureStreams {
 
 			System.out.println(list);
 		}
-
+		System.out.println();
 	}
 	
-//	private static void tryCollect() {
-//		System.out.println("Try Collect");
-//		List<String> list = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid");
-//		boolean match = list.stream().allMatch(e -> Character.isUpperCase(e.charAt(0)));
-//		System.out.println("All Match : " + match);
-//	}
+	private static void tryCollectGroupBy() {
+		System.out.println("******* TryGroupBy *******");
+		{
+			List<Point> list = Arrays.asList(new Point(24, 76), new Point(57, -81), new Point(24, 11), new Point(57, 3), new Point(85, 78));
+			Map<Integer, List<Point>> classification = list.stream().collect(Collectors.groupingBy(Point::x));
+			System.out.println(classification);
+			System.out.println(classification.get(24));
+		}
+		{
+			List<Point> list = Arrays.asList(new Point(24, 76), new Point(57, -81), new Point(24, 11), new Point(57, 3), new Point(85, 78));
+			Map<Integer, Set<Point>> classification = list.stream().collect(Collectors.groupingBy(point -> point.x(), 
+							Collectors.toCollection(() -> new TreeSet<Point>(Comparator.comparing(Point::x).thenComparing(Point::y)))));
+			System.out.println(classification);
+			System.out.println(classification.get(24));
+		}
+		System.out.println();
+	}
+	
+	private static void tryCollectGroupByAndCounting() {
+		System.out.println("******* TryCollectGroupByAndCounting *******");
+		{
+			List<Point> list = Arrays.asList(new Point(24, 76), new Point(57, -81), new Point(24, 11), new Point(57, 3), new Point(85, 78));
+			Map<Integer, Long> classification = list.stream().collect(Collectors.groupingBy(Point::x, Collectors.counting()));
+			System.out.println(classification);
+			System.out.println("Point with X=24 has " + classification.get(24) + " instances.");
+		}
+		System.out.println();
+	}
+	
+	private static void tryStreamOnClose() {
+		System.out.println("******* TryStreamOnClose *******");
+		
+		Supplier<IntStream> supplier = () -> IntStream.of(48, 23, 22, 2, 99, 11);
+		IntStream stream = supplier.get();
+		stream.onClose(() -> System.out.println("Closing Stream now."));
+		stream.forEach(System.out::print);
+		
+		System.out.println();
+		stream.close();
+		
+		System.out.println();
+	}
 	
 }
