@@ -30,6 +30,7 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryMap);
 		list.add(TryFeatureStreams::tryPeek);
 		list.add(TryFeatureStreams::tryDistinct);
+		list.add(TryFeatureStreams::tryReduceWithIdentity);
 		list.add(TryFeatureStreams::trySorted);
 		list.add(TryFeatureStreams::trySortedList);
 		list.add(TryFeatureStreams::tryCollect);
@@ -91,6 +92,13 @@ public class TryFeatureStreams {
 			.peek(System.out::print)
 			.forEach(System.out::print);
 		System.out.println();
+	}
+	
+	private static void tryReduceWithIdentity() {
+		
+		String result = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid").stream()
+			.reduce("*", (a, b) -> a + b);
+		System.out.println(result);
 	}
 	
 	private static void tryDistinct() {
