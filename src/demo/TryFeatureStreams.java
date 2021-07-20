@@ -54,7 +54,7 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryCollectJoining);
 		list.add(TryFeatureStreams::tryCollectPartitionBy);
 		list.add(TryFeatureStreams::tryStreamOnClose);
-		
+		list.add(TryFeatureStreams::tryStreamToArray);
 		
 		for (var r : list) {
 			r.run();
@@ -425,6 +425,21 @@ public class TryFeatureStreams {
 		System.out.println();
 		stream.close();
 		
+		System.out.println();
+	}
+	
+	private static void tryStreamToArray() {
+		System.out.println("******* TryStreamToArray *******");
+		{
+			List<Point> list = Arrays.asList(new Point(24, 76), new Point(57, -81), new Point(24, 11), new Point(57, 3), new Point(85, 78));
+			Point[] result = list.stream().toArray(Point[]::new);
+			System.out.println(result);
+		}
+		{
+			List<Point> list = Arrays.asList(new Point(24, 76), new Point(57, -81), new Point(24, 11), new Point(57, 3), new Point(85, 78));
+			Point[] result = list.stream().toArray(size -> new Point[size]);
+			System.out.println(result);
+		}
 		System.out.println();
 	}
 	
