@@ -30,7 +30,7 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryMap);
 		list.add(TryFeatureStreams::tryPeek);
 		list.add(TryFeatureStreams::tryDistinct);
-		list.add(TryFeatureStreams::tryReduceWithIdentity);
+		list.add(TryFeatureStreams::tryReduce);
 		list.add(TryFeatureStreams::trySorted);
 		list.add(TryFeatureStreams::trySortedList);
 		list.add(TryFeatureStreams::tryCollect);
@@ -94,11 +94,31 @@ public class TryFeatureStreams {
 		System.out.println();
 	}
 	
-	private static void tryReduceWithIdentity() {
+	private static void tryReduce() {
 		
-		String result = Arrays.asList("Warrior", "Rogue", "Priest", "Wizard", "Druid").stream()
-			.reduce("*", (a, b) -> a + b);
-		System.out.println(result);
+		System.out.println("******* TryReduce *******");
+		
+		{
+			String result = Arrays.asList("Warrior", "Rogue").stream()
+				.reduce("*", (a, b) -> a + b);
+			System.out.println(result);
+		}
+		{
+			String result = Arrays.asList("Warrior", "Rogue").stream()
+				.parallel()
+				.reduce("*", (a, b) -> a + b);
+			System.out.println(result);
+		}
+		{
+			Optional<String> result = Arrays.asList("Warrior", "Rogue").stream()
+				.reduce((a, b) -> a + b);
+			System.out.println(result.orElse(null));
+		}
+		{
+			Optional<String> result = Arrays.asList("Warrior", "Rogue").stream()
+				.reduce(String::concat);
+			System.out.println(result.orElse(null));
+		}
 	}
 	
 	private static void tryDistinct() {
