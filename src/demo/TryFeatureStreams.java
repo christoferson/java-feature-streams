@@ -120,6 +120,21 @@ public class TryFeatureStreams {
 				.reduce(String::concat);
 			System.out.println(result.orElse(null));
 		}
+		{
+			Integer result = Arrays.asList(3, 5, 2).stream()
+				.reduce(3, (a, b) -> a + b);
+			System.out.println(result);
+		}
+		{
+			Integer result = Arrays.asList(3, 5, 2).stream().parallel()
+				.reduce(3, Integer::sum);
+			System.out.println(result);
+		}
+		{
+			Integer result = Arrays.asList(3, 5, 2).stream()
+				.reduce(3, (acc, i) -> acc + i, (sub1, sub2) -> sub1 + sub2);
+			System.out.println(result);
+		}
 	}
 	
 	private static void tryDistinct() {
