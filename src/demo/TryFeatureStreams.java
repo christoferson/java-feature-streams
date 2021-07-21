@@ -56,7 +56,8 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryCollectPartitionBy);
 		list.add(TryFeatureStreams::tryStreamOnClose);
 		list.add(TryFeatureStreams::tryStreamToArray);
-		
+		list.add(TryFeatureStreams::trySequential);
+		list.add(TryFeatureStreams::tryParallel);
 		for (var r : list) {
 			r.run();
 		}
@@ -471,4 +472,17 @@ public class TryFeatureStreams {
 		System.out.println();
 	}
 	
+	private static void trySequential() {
+		System.out.println("******* TrySequential *******");
+		Arrays.asList(1, 2, 3, 4, 5, 6, 7).stream().forEach(System.out::print);
+		System.out.println();
+	}
+	
+	private static void tryParallel() {
+		System.out.println("******* TryParallel *******");
+		Arrays.asList(1, 2, 3, 4, 5, 6, 7).stream().parallel().forEach(System.out::print);
+		System.out.println();
+		Arrays.asList(1, 2, 3, 4, 5, 6, 7).parallelStream().forEach(System.out::print);
+		System.out.println();
+	}
 }
