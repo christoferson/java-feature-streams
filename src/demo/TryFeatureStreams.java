@@ -45,6 +45,7 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryIntStream);	
 		list.add(TryFeatureStreams::tryIntStreamFilter);
 		list.add(TryFeatureStreams::tryIntStreamConstructor);
+		list.add(TryFeatureStreams::tryIntStreamOthers);
 		list.add(TryFeatureStreams::tryFlatMap);	
 		list.add(TryFeatureStreams::tryAnyMatch);	
 		list.add(TryFeatureStreams::tryAllMatch);
@@ -373,6 +374,15 @@ public class TryFeatureStreams {
 		System.out.println();
 	}
 	
+	private static void tryIntStreamOthers() {
+
+		System.out.println("TryIntStreamOthers");
+
+		IntStream.range(1, 5).map(i -> i * i).forEach(System.out::print); System.out.println();
+
+		System.out.println();
+	}
+
 	private static void tryIntStreamFilter() {
 
 		Supplier<IntStream> supplier = () -> IntStream.of(48, 23, 22, 2, 99, 11);
