@@ -42,7 +42,8 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryCount);	
 		list.add(TryFeatureStreams::tryStreamOf);	
 		list.add(TryFeatureStreams::tryIntStream);	
-		list.add(TryFeatureStreams::tryIntStreamFilter);	
+		list.add(TryFeatureStreams::tryIntStreamFilter);
+		list.add(TryFeatureStreams::tryIntStreamConstructor);
 		list.add(TryFeatureStreams::tryFlatMap);	
 		list.add(TryFeatureStreams::tryAnyMatch);	
 		list.add(TryFeatureStreams::tryAllMatch);
@@ -341,6 +342,22 @@ public class TryFeatureStreams {
 		
 	}
 	
+	private static void tryIntStreamConstructor() {
+		
+		System.out.println("TryIntStreamConstructor");
+		
+		IntStream istream1 = IntStream.of(1, 2, 3);
+		istream1.forEach(System.out::print); System.out.println();
+		
+		IntStream.range(1, 3).forEach(System.out::print); System.out.println();
+		
+		IntStream.rangeClosed(1, 3).forEach(System.out::print); System.out.println();
+		
+		IntStream.iterate(0, i -> i + 2).limit(3).forEach(System.out::print); System.out.println();
+		
+		System.out.println();
+	}
+	
 	private static void tryIntStreamFilter() {
 
 		Supplier<IntStream> supplier = () -> IntStream.of(48, 23, 22, 2, 99, 11);
@@ -531,4 +548,7 @@ public class TryFeatureStreams {
 		Arrays.asList(1, 2, 3, 4, 5, 6, 7).parallelStream().forEach(System.out::print);
 		System.out.println();
 	}
+	
+	
+	
 }
