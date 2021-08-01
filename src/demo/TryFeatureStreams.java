@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntPredicate;
@@ -146,6 +147,11 @@ public class TryFeatureStreams {
 		List<Integer> numbers = List.of(1, 2, 3, 4, 5);
 		
 		{
+			Integer sum = numbers.parallelStream().reduce(0, (num1, num2) -> num1 + num2, (part1, part2) -> part1 + part2);
+			System.out.println(sum);
+		}
+		
+		{
 			Integer sum = numbers.stream().reduce(0, (num1, num2) -> num1 + num2);
 			System.out.println(sum);
 		}
@@ -167,6 +173,13 @@ public class TryFeatureStreams {
 			System.out.println(sum);
 		}
 		
+		List<String> letters = List.of("1", "2", "3", "4", "5");
+		
+		{
+			// <U> U reduce(U identity, BiFunction<U, ? super T, U> accumulator, BinaryOperator<U> combiner)
+			String result = letters.parallelStream().reduce("0", (num1, num2) -> num1 + num2, (part1, part2) -> part1 + part2);
+			System.out.println(result);
+		}
 	}
 	
 	private static void tryDistinct() {
@@ -354,6 +367,8 @@ public class TryFeatureStreams {
 		IntStream.rangeClosed(1, 3).forEach(System.out::print); System.out.println();
 		
 		IntStream.iterate(0, i -> i + 2).limit(3).forEach(System.out::print); System.out.println();
+		
+		IntStream.generate(() -> ThreadLocalRandom.current().nextInt(10)).limit(3).forEach(System.out::print); System.out.println();
 		
 		System.out.println();
 	}
