@@ -31,6 +31,7 @@ public class TryFeatureStreams {
 		list.add(TryFeatureStreams::tryPeek);
 		list.add(TryFeatureStreams::tryDistinct);
 		list.add(TryFeatureStreams::tryReduce);
+		list.add(TryFeatureStreams::tryReduceExtra);
 		list.add(TryFeatureStreams::trySorted);
 		list.add(TryFeatureStreams::trySortedList);
 		list.add(TryFeatureStreams::tryCollect);
@@ -135,6 +136,36 @@ public class TryFeatureStreams {
 				.reduce(3, (acc, i) -> acc + i, (sub1, sub2) -> sub1 + sub2);
 			System.out.println(result);
 		}
+	}
+	
+	private static void tryReduceExtra() {
+			
+		System.out.println("******* TryReduceExtra *******");
+		
+		List<Integer> numbers = List.of(1, 2, 3, 4, 5);
+		
+		{
+			Integer sum = numbers.stream().reduce(0, (num1, num2) -> num1 + num2);
+			System.out.println(sum);
+		}
+		
+		{
+			Integer sum = numbers.stream().reduce(0, Integer::sum);
+			System.out.println(sum);
+		}
+		
+		{
+			IntStream istream = numbers.stream().mapToInt(Integer::intValue);
+			int sum = istream.reduce(0,  Integer::sum);
+			System.out.println(sum);
+		}
+		
+		{
+			IntStream istream = numbers.stream().mapToInt(Integer::intValue);
+			int sum = istream.sum();
+			System.out.println(sum);
+		}
+		
 	}
 	
 	private static void tryDistinct() {
