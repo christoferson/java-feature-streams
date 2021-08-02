@@ -390,6 +390,10 @@ public class TryFeatureStreams {
 		
 		IntStream.range(1, 5).mapToDouble(i -> i + 0.5).forEach(System.out::print); System.out.println();
 		
+		System.out.println(IntStream.range(1, 5).anyMatch(i -> i % 2 == 0));
+		System.out.println(IntStream.range(1, 5).allMatch(i -> i % 2 == 0));
+		System.out.println(IntStream.range(1, 5).noneMatch(i -> i % 2 == 0));
+
 		System.out.println();
 
 	}
