@@ -380,11 +380,15 @@ public class TryFeatureStreams {
 
 		IntStream.range(1, 5).map(i -> i * i).forEach(System.out::print); System.out.println();
 
-		Stream<Long> streamOfObjects = IntStream.range(1, 5).mapToObj(i -> Long.valueOf(i)); 
+		Stream<Long> streamOfObjects = IntStream.range(1, 5).mapToObj(i -> Long.valueOf(i*3)); 
 		streamOfObjects.forEach(System.out::print); System.out.println();
 		
 		Stream<Integer> streamOfBoxedIntegers = IntStream.range(1, 5).boxed();
 		streamOfBoxedIntegers.forEach(System.out::print); System.out.println();
+		
+		IntStream.range(1, 5).mapToLong(i -> i + 1).forEach(System.out::print); System.out.println();
+		
+		IntStream.range(1, 5).mapToDouble(i -> i + 0.5).forEach(System.out::print); System.out.println();
 		
 		System.out.println();
 
