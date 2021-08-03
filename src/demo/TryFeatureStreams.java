@@ -394,6 +394,9 @@ public class TryFeatureStreams {
 		System.out.println(IntStream.range(1, 5).allMatch(i -> i % 2 == 0));
 		System.out.println(IntStream.range(1, 5).noneMatch(i -> i % 2 == 0));
 
+		System.out.println(IntStream.range(1, 5).filter(i -> i % 2 == 0).allMatch(i -> i % 2 == 0));
+		System.out.println(IntStream.range(1, 5).filter(i -> i % 2 == 0).noneMatch(i -> i % 2 != 0));
+
 		System.out.println();
 
 	}
