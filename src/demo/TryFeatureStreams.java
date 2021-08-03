@@ -393,10 +393,14 @@ public class TryFeatureStreams {
 		System.out.println(IntStream.range(1, 5).anyMatch(i -> i % 2 == 0));
 		System.out.println(IntStream.range(1, 5).allMatch(i -> i % 2 == 0));
 		System.out.println(IntStream.range(1, 5).noneMatch(i -> i % 2 == 0));
-
+		
 		System.out.println(IntStream.range(1, 5).filter(i -> i % 2 == 0).allMatch(i -> i % 2 == 0));
 		System.out.println(IntStream.range(1, 5).filter(i -> i % 2 == 0).noneMatch(i -> i % 2 != 0));
-
+		
+		System.out.println("Min: " + IntStream.range(1, 5).min().getAsInt());
+		System.out.println("Max: " + IntStream.range(1, 5).max().getAsInt());
+		
+		
 		System.out.println();
 
 	}
