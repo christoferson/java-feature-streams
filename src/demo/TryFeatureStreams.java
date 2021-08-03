@@ -400,6 +400,7 @@ public class TryFeatureStreams {
 		System.out.println("Min: " + IntStream.range(1, 5).min().getAsInt());
 		System.out.println("Max: " + IntStream.range(1, 5).max().getAsInt());
 		
+		System.out.println(IntStream.range(1, 5).reduce(1, (x, y) -> x * y)); System.out.println();
 		
 		System.out.println();
 
